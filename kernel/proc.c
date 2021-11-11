@@ -275,10 +275,10 @@ userinit(void)
   p->ticket = 100;
   p->stride = strideK/p->ticket;
   p->pass = 0;
-
+  
   safestrcpy(p->name, "initcode", sizeof(p->name));
   p->cwd = namei("/");
-
+  
   p->state = RUNNABLE;
   release(&p->lock);
 }
@@ -643,10 +643,10 @@ scheduler(void)
           printf("stride: %d\n", p->stride);
           printf("pass: %d\n", p->pass);
 
-          if (cPass == minPass) 
+          if (cPass == minPass) // found the winning ticket
           {
             p->pass += p->stride;
-            sched_ticks++;
+            p->sched_ticks++;
             
             // run this process
             p->state = RUNNING;
@@ -886,4 +886,14 @@ void setticket(int n)
 {
   printf("Setting %d tickets to process \n", n);
   proc->ticket = n;
+}
+
+void sched_statistics() {
+  struct proc* p;
+  for(p = proc; p < &proc[NPROC]; p++){
+    if(p->state != UNUSED) {
+      cprintf("%s :, p->name);
+      cprintf("\t tickets: %d \t times scheduled: %d\n", p->tickets, p->sched_ticks);
+    }
+  } 
 }
