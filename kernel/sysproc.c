@@ -98,5 +98,6 @@ sys_uptime(void)
 
 /* TD: Stride scheduling code */
 uint64 sys_sched_statitics(void) {
-  printf("display statistics here\n");
+  sched_statistics();
+  return 0;
 }
