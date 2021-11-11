@@ -110,4 +110,5 @@ struct proc {
   int tickets;
   int stride;
   int pass;
+  int sched_ticks;
 };
